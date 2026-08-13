@@ -8,7 +8,7 @@
 > **How to use:** work the batches top-to-bottom (they're ordered by
 > effort-vs-impact and dependency). Batch 2 is the structural enabler for 3 and
 > 5 — do it before them. Within a batch, land one commit per logical fix with a
-> regression test, and keep `npm test` green (**502 tests** across 126 files as of 2026-08-04).
+> regression test, and keep `npm test` green (**503 tests** across 126 files as of 2026-08-13).
 >
 > **[Part II](#part-ii--make-it-useful-for-the-majority-2026-07-26) (2026-07-26)**
 > is a second audit pass answering "make this useful for the majority of people —
@@ -66,7 +66,7 @@ Full research (with source URLs) is in the audit report — see *References* bel
 | **1** | Trust & truth (security + honesty) | 1–2 d | ✅ **DONE** (pushed) |
 | **2** | Modularize for testability + backend seam | 2–4 d | ✅ **DONE** — all substantive tasks landed (map byte-identical, 189 tests). Deferred-optional: `lib/` file split + in-process MCP. |
 | **3** | Dirty-tree performance | 3–5 d | 🟨 **Both cache tiers + visible skips + symbol cap shipped.** Of what remained, two items were **measured and refuted** (cross-product pruning drops 0 edges on all 5 repos tested; the heapUsed OOM warning cannot fire in time — built, measured, reverted). Post-commit locking shipped; its incremental half stays gated on Tier 2 going default-on |
-| **4** | Distribution & release hygiene | 2–3 d | 🟨 Mostly done — plugin/marketplace, MCP Registry listing, tag-triggered publish, and README trust markers shipped. Release automation **closed without adopting changesets** (two lockstep tests instead); `npx skills add` alignment + Cursor/Gemini hooks still deferred |
+| **4** | Distribution & release hygiene | 2–3 d | 🟨 Mostly done — plugin/marketplace, MCP Registry listing, tag-triggered publish, and README trust markers shipped. Release automation **closed without adopting changesets** (two lockstep tests instead); `npx skills add` verified working 2026-08-13 (the checkbox was stale, not the layout). Only the Cursor `beforeShellExecution` hook + Gemini extension remain |
 | **5** | TS-depth before language-breadth | weeks | 🟨 Mostly done — depth + resolution shipped; monorepo intelligence + symbol-PageRank deferred |
 | **B** | Cross-cutting backlog (low-severity) | ongoing | ✅ **Swept 2026-07-27 — 20 done, 4 partial, 0 untouched.** Security, CI OS matrix, typecheck + coverage gates, ranking-ORDER tests, installer robustness, docs and housekeeping all landed. Several items turned out to be **already fixed with a stale checkbox**; the remaining partials each say what is left and why |
 
@@ -336,9 +336,13 @@ discovered is trustworthy and fast.
 - [x] **Official MCP Registry listing** — add `mcpName: "io.github.raymondchins/agentmap"`
   to `package.json`, run `mcp-publisher init && login github && publish`. Low
   effort (package already on npm); feeds Smithery/mcp.so/PulseMCP.
-- [ ] **`npx skills add` compatibility** — align repo layout so
-  `npx skills add raymondchins/agentmap` works (already ships SKILL.md); gets on
-  the skills.sh leaderboard, distributes across Claude/Cursor/Codex at once.
+- [x] **`npx skills add` compatibility** — **already true; the checkbox was
+  stale.** The `skills/<name>/SKILL.md` layout the [`skills`](https://github.com/vercel-labs/skills)
+  CLI expects landed in `28e9029` (2026-07-04) and README.md:298 has documented it
+  since. Re-verified end-to-end 2026-08-13 in a throwaway directory: `npx skills add
+  raymondchins/agentmap` → "Found 1 skill", installs `./.agents/skills/agentmap`
+  and fans out to Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and
+  OpenCode; risk assessments come back Safe / 0 alerts / Low Risk.
 - [x] **Codex CLI PreToolUse hook** — biggest enforcement gap; extend
   `--install-hooks` to write a `hooks.json`/`config.toml` PreToolUse matcher
   returning `permissionDecision: deny` + reason (do NOT use `additionalContext` —
@@ -661,9 +665,9 @@ post-distribution demand asks for Python (Batch 2's seam makes it a 1–2 week a
   with source URLs, completeness critique, contradictions) — generated
   2026-07-03. Ask Claude to regenerate from the workflow run, or see the session
   where this roadmap was created.
-- **Key numbers (refreshed 2026-08-04):** single-file CLI (`agentmap.mjs`, **4,746
-  lines**), one runtime dep (`ts-morph`), **Node ≥20**, **502 tests** green across
-  126 files (2026-08-04). *(This line has now been stale twice — it read ~1831 lines /
+- **Key numbers (refreshed 2026-08-13):** single-file CLI (`agentmap.mjs`, **4,746
+  lines**), one runtime dep (`ts-morph`), **Node ≥20**, **503 tests** green across
+  126 files (2026-08-13). *(This line has now been stale twice — it read ~1831 lines /
   Node ≥18 / 165 tests, then 3,669 lines / 396 tests / 92 files. Treat any count here
   as a date-stamped observation, not a fact.)*
 - **Competitive north star:** ⚠️ the old note read "CodeGraph (multi-language, 57k

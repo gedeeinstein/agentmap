@@ -33,7 +33,7 @@ hooks/                — per-platform nudge hooks + the shared installer
   install.mjs · install-helpers.mjs · hooks.json · guidance.md
 skills/agentmap/      — the Claude Code skill
 .claude-plugin/       — plugin + marketplace manifests
-test/                 — 120 test files, `node --test`
+test/                 — 126 test files, `node --test`
 eval/ · benchmark/    — the reproducible measurements behind README claims
 examples/ · assets/ · docs/
 ```
@@ -54,7 +54,7 @@ examples/ · assets/ · docs/
 npm test
 ```
 
-120 test files via `node --test test/*.test.mjs test/**/*.test.mjs`. The publish workflow additionally runs `node agentmap.mjs --hubs` (smoke) and `npm pack --dry-run` (tarball contents) — run both locally before proposing a release.
+126 test files via `node --test test/*.test.mjs test/**/*.test.mjs`. The publish workflow additionally runs `node agentmap.mjs --hubs` (smoke) and `npm pack --dry-run` (tarball contents) — run both locally before proposing a release.
 
 Self-map this repo with `npm run map` (= `node agentmap.mjs`). Note it maps itself from the **repo root**, not `node_modules/` — the local `.git/hooks/post-commit` reflects that and differs from the hook shipped to consumers.
 
