@@ -25,13 +25,15 @@ Published to npm as `@raymondchins/agentmap` and to the MCP registry as `io.gith
 ```
 agentmap.mjs          — the entire CLI (246KB, single file, by design)
 mcp.mjs               — MCP server wrapper
-hooks/                — per-platform nudge hooks + the shared installer
+hooks/                — the hooks themselves
   agentmap-nudge.mjs        (Claude Code)
   agentmap-codex-nudge.mjs  · agentmap-gemini-nudge.mjs
-  opencode-agentmap-nudge.js · cursor-rule.mdc
   post-commit               — the auto-refresh hook shipped to consumers
-  install.mjs · install-helpers.mjs · hooks.json · guidance.md
-skills/agentmap/      — the Claude Code skill
+  hooks.json · INSTALL.md
+skills/               — the skill payloads + the shared installer
+  agentmap/SKILL.md         — the skill itself
+  cursor-rule.mdc · opencode-agentmap-nudge.js
+  install.mjs · install-helpers.mjs · guidance.md
 .claude-plugin/       — plugin + marketplace manifests
 test/                 — 126 test files, `node --test`
 eval/ · benchmark/    — the reproducible measurements behind README claims
